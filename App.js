@@ -1,20 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Alert, Button, Platform, SafeAreaView, StatusBar } from 'react-native';
+import { useDimensions, useDeviceOrientation } from '@react-native-community/hooks'
 
 export default function App() {
+  console.log("app started")
+
+  const {landscape} = useDeviceOrientation();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+   <View>
+     <Text>hello</Text>
+   </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
