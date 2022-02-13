@@ -1,15 +1,12 @@
-import { StyleSheet, Text, View, Alert, Button, Platform, SafeAreaView, StatusBar } from 'react-native';
-import { useDimensions, useDeviceOrientation } from '@react-native-community/hooks'
-import WelcomeScreen from './app/screens/WelcomeScreen';
-import ViewImageScreen from './app/screens/ViewImageScreen';
+import { View } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
+import { AppText } from "./app/components/AppText";
+import { AppButton } from "./app/components/AppButton";
+import WelcomeScreen from "./app/screens/WelcomeScreen";
 
 export default function App() {
-  console.log("app started")
+  console.log("app started");
 
-
-  return (
-   <ViewImageScreen/>
-  );
+  return <WelcomeScreen />;
 }
-
-
