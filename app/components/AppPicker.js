@@ -65,6 +65,7 @@ function AppPicker({
                 onPress={() => {
                   setModalVisible(false);
                   onSelectItem(item);
+                  console.log("pressed from category picker");
                 }}
               />
             )}
