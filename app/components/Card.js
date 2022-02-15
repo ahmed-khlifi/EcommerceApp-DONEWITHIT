@@ -1,13 +1,13 @@
 import React from "react";
-import { StyleSheet, View, Image } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 
-import colors from "../config/colors";
 import AppText from "./AppText";
+import colors from "../config/colors";
 
-export default function Card({ title, subTitle, image }) {
+function Card({ title, subTitle, image }) {
   return (
     <View style={styles.card}>
-      <Image source={image} style={styles.image} />
+      <Image style={styles.image} source={image} />
       <View style={styles.detailsContainer}>
         <AppText style={styles.title}>{title}</AppText>
         <AppText style={styles.subTitle}>{subTitle}</AppText>
@@ -38,3 +38,5 @@ const styles = StyleSheet.create({
     marginBottom: 7,
   },
 });
+
+export default Card;

@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 function Icon({
   name,
-  size = 50,
+  size = 40,
   backgroundColor = "#000",
   iconColor = "#fff",
 }) {
@@ -15,11 +15,11 @@ function Icon({
         height: size,
         borderRadius: size / 2,
         backgroundColor,
-        alignItems: "center",
         justifyContent: "center",
+        alignItems: "center",
       }}
     >
-      <MaterialCommunityIcons name={name} size={size * 0.5} color={iconColor} />
+      <MaterialCommunityIcons name={name} color={iconColor} size={size * 0.5} />
     </View>
   );
 }

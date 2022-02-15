@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
-import ListItem from "../components/ListItem";
-import ListItemDeleteAction from "../components/ListItemDeleteAction";
-import ListItemSeparator from "../components/ListItemSeparator";
 import Screen from "../components/Screen";
+import {
+  ListItem,
+  ListItemDeleteAction,
+  ListItemSeparator,
+} from "../components/lists";
 
 const initialMessages = [
   {
     id: 1,
-    title: "T1",
+    title:
+      "T1 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     description: "D1",
     image: require("../assets/mosh.jpg"),
   },
@@ -19,12 +22,6 @@ const initialMessages = [
     description: "D2",
     image: require("../assets/mosh.jpg"),
   },
-  {
-    id: 3,
-    title: "T3",
-    description: "D3",
-    image: require("../assets/mosh.jpg"),
-  },
 ];
 
 function MessagesScreen(props) {
@@ -32,9 +29,8 @@ function MessagesScreen(props) {
   const [refreshing, setRefreshing] = useState(false);
 
   const handleDelete = (message) => {
-    // delete message
-    const newMessages = messages.filter((m) => m.id !== message.id);
-    setMessages(newMessages);
+    // Delete the message from messages
+    setMessages(messages.filter((m) => m.id !== message.id));
   };
 
   return (
@@ -47,8 +43,7 @@ function MessagesScreen(props) {
             title={item.title}
             subTitle={item.description}
             image={item.image}
-            onPress={() => console.log("messag selected", item)}
-            /* swipe right gesture for deleting item  */
+            onPress={() => console.log("Message selected", item)}
             renderRightActions={() => (
               <ListItemDeleteAction onPress={() => handleDelete(item)} />
             )}
@@ -56,7 +51,9 @@ function MessagesScreen(props) {
         )}
         ItemSeparatorComponent={ListItemSeparator}
         refreshing={refreshing}
-        onRefresh={() => setMessages(initialMessages)}
+        onRefresh={() => {
+          setMessages(initialMessages);
+        }}
       />
     </Screen>
   );

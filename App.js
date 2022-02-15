@@ -1,16 +1,8 @@
-import { View, Text, TextInput, Switch } from "react-native";
-import Screen from "./app/components/Screen";
-import Icon from "./app/components/Icon";
-import ListItem from "./app/components/ListItem";
-import AccountScreen from "./app/screens/AccountScreen";
-import ListingScreen from "./app/screens/ListingScreen";
-import { useState } from "react";
-import AppTextInput from "./app/components/AppTextInput";
-import AppPicker from "./app/components/AppPicker";
-import LoginScreen from "./app/screens/LoginScreen";
+import MessagesScreen from "./app/screens/MessagesScreen";
+import ListingEditScreen from "./app/screens/ListingEditScreen";
 
 export default function App() {
   console.log("app started");
 
-  return <LoginScreen />;
+  return <ListingEditScreen />;
 }
