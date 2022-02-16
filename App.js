@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { LogBox } from "react-native";
 import { Button, Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
@@ -7,6 +8,10 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import Screen from "./app/components/Screen";
 import AuthNavigator from "./app/navigation/AuthNavigator";
+import navigationTheme from "./app/navigation/navigationTheme";
+import AppNavigator from "./app/navigation/AppNavigator";
+
+LogBox.ignoreAllLogs();
 
 const Link = () => {
   const navigation = useNavigation();
@@ -78,8 +83,8 @@ export default function App() {
 
   return (
     <Screen>
-      <NavigationContainer>
-        <AuthNavigator />
+      <NavigationContainer theme={navigationTheme}>
+        <AppNavigator />
       </NavigationContainer>
     </Screen>
   );

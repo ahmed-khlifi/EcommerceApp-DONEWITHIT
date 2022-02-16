@@ -20,7 +20,7 @@ const listings = [
   },
 ];
 
-function ListingsScreen(props) {
+function ListingsScreen({ navigation }) {
   return (
     <Screen style={styles.screen}>
       <FlatList
@@ -28,6 +28,7 @@ function ListingsScreen(props) {
         keyExtractor={(listing) => listing.id.toString()}
         renderItem={({ item }) => (
           <Card
+            onPress={() => navigation.navigate("ListingDetails", item)}
             title={item.title}
             subTitle={"$" + item.price}
             image={item.image}
