@@ -34,6 +34,8 @@ function ListingsScreen({ navigation }) {
       <ActivityIndecator visible={loading} />
       <FlatList
         data={listings}
+        refreshing={loading}
+        onRefresh={loadListings}
         keyExtractor={(listing) => listing.id.toString()}
         renderItem={({ item }) => (
           <Card

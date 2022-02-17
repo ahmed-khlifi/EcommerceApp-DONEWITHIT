@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import * as Yup from "yup";
 
 import listingApi from "../api/listings";
@@ -13,6 +13,7 @@ import {
 import FormImagePicker from "../components/forms/FormImagePicker";
 import Screen from "../components/Screen";
 import useLocation from "../hooks/useLocation";
+import UploadScreen from "./UploadScreen";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
@@ -30,56 +31,72 @@ const categories = [
 
 function ListingEditScreen() {
   const location = useLocation();
+  const [uploadvisible, setUploadvisible] = useState(false);
+  const [progress, setProgress] = useState(0);
 
-  const handleSubmit = async (listing) => {
-    console.log("====================================");
-    console.log("uploading in progress");
-    console.log("====================================");
-    const result = await listingApi.addListing({ ...listing, location });
-    if (!result.ok) return alert("could note save listing");
-    alert("Success");
+  const handleSubmit = async (listing, { resetForm }) => {
+    setUploadvisible(true);
+    const result = await listingApi.addListing(
+      { ...listing, location },
+      (progress) => setProgress(progress)
+    );
+    setUploadvisible(false);
+
+    if (!result.ok) {
+      setUploadvisible(false);
+      return alert("could note save listing");
+    }
+
+    resetForm();
   };
 
   return (
-    <Screen style={styles.container}>
-      <Form
-        initialValues={{
-          title: "",
-          price: "",
-          description: "",
-          category: null,
-          images: [],
-        }}
-        onSubmit={handleSubmit}
-        validationSchema={validationSchema}
-      >
-        <FormImagePicker name="images" />
-        <FormField maxLength={255} name="title" placeholder="Title" />
-        <FormField
-          keyboardType="numeric"
-          maxLength={8}
-          name="price"
-          placeholder="Price"
-          width={120}
-        />
-        <Picker
-          items={categories}
-          name="category"
-          placeholder="Category"
-          width="50%"
-          PickerItemComponent={CategoryPickerItem}
-          numberOfColumns={3}
-        />
-        <FormField
-          maxLength={255}
-          multiline
-          name="description"
-          numberOfLines={3}
-          placeholder="Description"
-        />
-        <SubmitButton title="Post" />
-      </Form>
-    </Screen>
+    <ScrollView keyboardShouldPersistTaps={"handled"}>
+      <UploadScreen
+        progress={progress}
+        visible={uploadvisible}
+        onDone={() => setUploadvisible(false)}
+      />
+      <Screen style={styles.container}>
+        <Form
+          initialValues={{
+            title: "",
+            price: "",
+            description: "",
+            category: null,
+            images: [],
+          }}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+        >
+          <FormImagePicker name="images" />
+          <FormField maxLength={255} name="title" placeholder="Title" />
+          <FormField
+            keyboardType="numeric"
+            maxLength={8}
+            name="price"
+            placeholder="Price"
+            width={120}
+          />
+          <Picker
+            items={categories}
+            name="category"
+            placeholder="Category"
+            width="50%"
+            PickerItemComponent={CategoryPickerItem}
+            numberOfColumns={3}
+          />
+          <FormField
+            maxLength={255}
+            multiline
+            name="description"
+            numberOfLines={3}
+            placeholder="Description"
+          />
+          <SubmitButton title="Post" />
+        </Form>
+      </Screen>
+    </ScrollView>
   );
 }
 
