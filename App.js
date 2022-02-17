@@ -9,8 +9,6 @@ import AppNavigator from "./app/navigation/AppNavigator";
 
 LogBox.ignoreAllLogs();
 
-const Tab = createBottomTabNavigator();
-
 export default function App() {
   console.log("====================================");
   console.log("starting the app");
