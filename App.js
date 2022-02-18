@@ -1,45 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { LogBox } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import NetInfo, { useNetInfo } from "@react-native-community/netinfo";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AppLoading from "expo-app-loading";
 
 import Screen from "./app/components/Screen";
 import navigationTheme from "./app/navigation/navigationTheme";
 import AppNavigator from "./app/navigation/AppNavigator";
 import OffLineNotice from "./app/components/OffLineNotice";
-import AppText from "./app/components/AppText";
+import AuthNavigator from "./app/navigation/AuthNavigator";
+import AuthContext from "./app/auth/context";
+import authStorage from "./app/auth/storage";
+import jwtDecode from "jwt-decode";
 
 LogBox.ignoreAllLogs();
 
 export default function App() {
-  const demo = async () => {
-    try {
-      await AsyncStorage.setItem(
-        "person",
-        JSON.stringify({
-          id: 1,
-        })
-      );
-      const value = await AsyncStorage.getItem("person");
-      const person = JSON.parse(value);
-      console.log(person);
-    } catch (error) {
-      console.log(error);
-    }
+  const [user, setUser] = useState();
+  const [isReady, setIsReady] = useState();
+
+  const restoreToken = async () => {
+    const token = await authStorage.getToken();
+    if (!token) return;
+    setUser(jwtDecode(token));
   };
 
-  demo();
+  if (!isReady)
+    return (
+      <AppLoading
+        startAsync={restoreToken}
+        onFinish={() => setIsReady(true)}
+        onError={(e) => console.log(e)}
+      />
+    );
 
   return (
     <>
-      <OffLineNotice />
-      <Screen>
-        <NavigationContainer theme={navigationTheme}>
-          <AppNavigator />
-        </NavigationContainer>
-      </Screen>
+      <AuthContext.Provider value={{ user, setUser }}>
+        <OffLineNotice />
+        <Screen>
+          <NavigationContainer theme={navigationTheme}>
+            {user ? <AppNavigator /> : <AuthNavigator />}
+          </NavigationContainer>
+        </Screen>
+      </AuthContext.Provider>
     </>
   );
 }
