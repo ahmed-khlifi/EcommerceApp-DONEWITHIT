@@ -36,6 +36,7 @@ function ListingsScreen({ navigation }) {
         data={listings}
         refreshing={loading}
         onRefresh={loadListings}
+        onEndReached={() => console.log("end of flat list")}
         keyExtractor={(listing) => listing.id.toString()}
         renderItem={({ item }) => (
           <Card
@@ -43,6 +44,7 @@ function ListingsScreen({ navigation }) {
             title={item.title}
             subTitle={"$" + item.price}
             imageUrl={item.images[0].url}
+            thumbnail={item.images[0].thumbnailUrl}
           />
         )}
       />
