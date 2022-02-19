@@ -14,11 +14,11 @@ function ListingDetailsScreen({ route }) {
         <AppText style={styles.title}>{listing.title}</AppText>
         <AppText style={styles.price}>${listing.price}</AppText>
         <View style={styles.userContainer}>
-          <ListItem
+          {/* <ListItem
             image={require("../assets/mosh.jpg")}
             title="Mosh Hamedani"
             subTitle="5 Listings"
-          />
+          /> */}
         </View>
       </View>
     </View>
